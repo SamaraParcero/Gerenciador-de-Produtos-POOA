@@ -5,13 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
+import br.com.ucsal.anotacoes.Singleton;
 import br.com.ucsal.model.Produto;
 
+@Singleton
 public class MemoriaProdutoRepository implements ProdutoRepository<Produto, Integer>{
 
     private Map<Integer, Produto> produtos = new HashMap<>();
     private AtomicInteger currentId = new AtomicInteger(1);
+
 
     private static MemoriaProdutoRepository instancia;
     
@@ -20,12 +22,14 @@ public class MemoriaProdutoRepository implements ProdutoRepository<Produto, Inte
     
     
     public static synchronized MemoriaProdutoRepository getInstancia() {
-    	if(instancia == null) {
-    		instancia = new MemoriaProdutoRepository();
-    	}
-    	return instancia;
-	}
-    
+        if (instancia == null) {
+            instancia = new MemoriaProdutoRepository();
+            System.out.println("Singleton: Criando nova instância de MemoriaProdutoRepository.");
+        } else {
+            System.out.println("Singleton: Retornando instância existente de MemoriaProdutoRepository.");
+        }
+        return instancia;
+    }
     
     @Override
     public void adicionar(Produto entidade) {

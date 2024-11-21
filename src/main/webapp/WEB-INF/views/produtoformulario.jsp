@@ -33,7 +33,7 @@
     }
 %>
 <h2><%= titulo %></h2>
-<form action="<c:choose><c:when test='${not empty produto}'>editarProduto</c:when><c:otherwise>adicionarProduto</c:otherwise></c:choose>" method="post">
+<form action="<c:choose><c:when test='${not empty produto}'>editarServlets</c:when><c:otherwise>adicionarProdutos</c:otherwise></c:choose>" method="post">
         <c:if test="${not empty produto}">
             <input type="hidden" name="id" value="${produto.id}">
         </c:if>
