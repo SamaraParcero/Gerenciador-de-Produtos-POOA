@@ -4,13 +4,18 @@ import java.util.List;
 
 import br.com.ucsal.model.Produto;
 import br.com.ucsal.persistencia.ProdutoRepository;
+import br.com.ucsal.util.DependencyInjector;
+import br.com.ucsal.util.Inject;
 
 public class ProdutoService {
+
+ @Inject
  private ProdutoRepository<Produto, Integer> produtoRepository;
 
- public ProdutoService(ProdutoRepository<Produto, Integer> produtoRepository) {
-     this.produtoRepository = produtoRepository;
- }
+    public ProdutoService() {
+        // Injetar dependências
+        DependencyInjector.injectDependencies(this);
+    }
 
  public void adicionarProduto(String nome, double preco) {
      Produto produto = new Produto(null, nome, preco);

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import br.com.ucsal.persistencia.HSQLProdutoRepository;
 import br.com.ucsal.service.ProdutoService;
+import br.com.ucsal.util.DependencyInjector;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +15,8 @@ public class ProdutoExcluirServlet implements Command {
 	private ProdutoService produtoService;
 
 	public ProdutoExcluirServlet() {
-		produtoService = new ProdutoService(new HSQLProdutoRepository());
+		ProdutoService service = new ProdutoService();
+		DependencyInjector.injectDependencies(service);
 	}
 
 	@Override

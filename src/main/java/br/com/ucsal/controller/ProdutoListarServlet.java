@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.ucsal.model.Produto;
 import br.com.ucsal.persistencia.HSQLProdutoRepository;
 import br.com.ucsal.service.ProdutoService;
+import br.com.ucsal.util.DependencyInjector;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,7 +20,8 @@ public class ProdutoListarServlet implements Command {
 	private ProdutoService produtoService;
 
 	public ProdutoListarServlet() {
-        produtoService = new ProdutoService(new HSQLProdutoRepository());
+        ProdutoService service = new ProdutoService();
+        DependencyInjector.injectDependencies(service);
 	}
 	
 

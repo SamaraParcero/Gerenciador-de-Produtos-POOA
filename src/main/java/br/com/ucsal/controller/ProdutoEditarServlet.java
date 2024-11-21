@@ -5,9 +5,9 @@ import java.io.IOException;
 import br.com.ucsal.model.Produto;
 import br.com.ucsal.persistencia.HSQLProdutoRepository;
 import br.com.ucsal.service.ProdutoService;
+import br.com.ucsal.util.DependencyInjector;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -17,8 +17,8 @@ public class ProdutoEditarServlet implements Command {
     private ProdutoService produtoService;
 
     public ProdutoEditarServlet() {
-        this.produtoService = new ProdutoService(new HSQLProdutoRepository());
-    }
+        ProdutoService service = new ProdutoService();
+        DependencyInjector.injectDependencies(service);    }
 
 
     @Override
