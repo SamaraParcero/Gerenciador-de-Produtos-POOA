@@ -5,8 +5,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Define a anotação @Inject para injeção de dependências.
+ * 
+ * Aplicável a classes e campos. A anotação é mantida em tempo de execução.
+ */
 
-@Target({ElementType.TYPE, ElementType.FIELD})
-@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.FIELD}) // Alvo: classes e campos.
+@Retention(RetentionPolicy.RUNTIME) // Disponível em tempo de execução.
 public @interface Inject {
 }

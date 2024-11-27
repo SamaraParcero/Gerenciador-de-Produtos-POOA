@@ -16,6 +16,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet para listar produtos. Recupera os produtos do serviço e os exibe em
+ * uma página JSP.
+ */
 @Rota(value = "/listarProdutos")
 public class ProdutoListarServlet implements Command {
     private static final long serialVersionUID = 1L;
@@ -24,6 +28,7 @@ public class ProdutoListarServlet implements Command {
 	private ProdutoService produtoService;
 
 	public ProdutoListarServlet() {
+		// Realiza a injeção de dependências no serviço
 		Injector.injectDependencies(this);
 	}
 	

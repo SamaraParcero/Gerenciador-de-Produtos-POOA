@@ -1,7 +1,5 @@
 package br.com.ucsal.controller;
 
-
-
 import java.io.IOException;
 
 import br.com.ucsal.anotacoes.Inject;
@@ -14,39 +12,51 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@Rota(value="/adicionarProdutos")
+/**
+ * Servlet para adicionar produtos. Processa requisições HTTP GET e POST para
+ * exibir o formulário e salvar o produto.
+ */
+@Rota(value = "/adicionarProdutos")
 public class ProdutoAdicionarServlet implements Command {
- private static final long serialVersionUID = 1L;
- 
-@Inject
- private ProdutoService produtoService;
+	private static final long serialVersionUID = 1L;
 
- public ProdutoAdicionarServlet() {
-	 Injector.injectDependencies(this);
- }
+	// Dependência injetada para manipulação de produtos
+	@Inject
+	private ProdutoService produtoService;
 
- @Override
- public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     String method = request.getMethod();
-     
-     if ("GET".equalsIgnoreCase(method)) {
-         doGet(request, response);
-     } else if ("POST".equalsIgnoreCase(method)) {
-         doPost(request, response);
-     }
- }
+	
+     //Construtor que executa a injeção de dependências.  
+	public ProdutoAdicionarServlet() {
+		Injector.injectDependencies(this);
+	}
 
- private void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/produtoformulario.jsp");
-     dispatcher.forward(request, response);
- }
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String method = request.getMethod();
 
- private void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     String nome = request.getParameter("nome");
-     double preco = Double.parseDouble(request.getParameter("preco"));
-     produtoService.adicionarProduto(nome, preco);
-     response.sendRedirect("listarProdutos");
- }
+		// Redireciona para o método adequado com base no verbo HTTP
+		if ("GET".equalsIgnoreCase(method)) {
+			doGet(request, response);
+		} else if ("POST".equalsIgnoreCase(method)) {
+			doPost(request, response);
+		}
+	}
+
+	  //Exibe o formulário para adicionar um produto.
+	private void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/produtoformulario.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	 
+     //Processa a submissão do formulário de adição de produto.  
+	private void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nome = request.getParameter("nome");
+		double preco = Double.parseDouble(request.getParameter("preco"));
+		// Salva o novo produto usando o serviço
+		produtoService.adicionarProduto(nome, preco);
+		// Redireciona para a lista de produtos após a adição
+		response.sendRedirect("listarProdutos");
+	}
 
 }
-

@@ -11,9 +11,13 @@ import java.util.List;
 import br.com.ucsal.model.Produto;
 import br.com.ucsal.util.DatabaseUtil;
 
-
+/**
+ * Implementação de ProdutoRepository usando HSQLDB. Esta classe manipula os
+ * dados da tabela de produtos em um banco de dados HSQLDB.
+ */
 public class HSQLProdutoRepository implements ProdutoRepository<Produto, Integer>{
 
+	//Adiciona um novo produto ao banco de dados.
     @Override
     public void adicionar(Produto entidade) {
         String sql = "INSERT INTO produtos (nome, preco) VALUES (?, ?)";
@@ -31,6 +35,7 @@ public class HSQLProdutoRepository implements ProdutoRepository<Produto, Integer
         }
     }
 
+  //Remove um produto do banco de dados com base no ID.
     @Override
     public void remover(Integer id) {
         String sql = "DELETE FROM produtos WHERE id = ?";
@@ -43,6 +48,7 @@ public class HSQLProdutoRepository implements ProdutoRepository<Produto, Integer
         }
     }
 
+  //Retorna uma lista de todos os produtos do banco de dados.
     @Override
     public List<Produto> listar() {
         String sql = "SELECT * FROM produtos";
@@ -64,6 +70,7 @@ public class HSQLProdutoRepository implements ProdutoRepository<Produto, Integer
         return produtos;
     }
     
+    //Atualiza as informações de um produto no banco de dados.
     @Override
     public void atualizar(Produto entidade) {
         String sql = "UPDATE produtos SET nome = ?, preco = ? WHERE id = ?";
@@ -79,6 +86,7 @@ public class HSQLProdutoRepository implements ProdutoRepository<Produto, Integer
     }
 
 
+  //Obtém um produto pelo ID do banco de dados.
     @Override
     public Produto obterPorID(Integer id) {
         String sql = "SELECT * FROM produtos WHERE id = ?";

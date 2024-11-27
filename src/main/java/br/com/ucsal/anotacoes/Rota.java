@@ -5,8 +5,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.TYPE) 
-@Retention(RetentionPolicy.RUNTIME)
+
+/**
+ * Define a anotação @Rota para mapear rotas em classes.
+ * 
+ * A anotação aceita um valor que representa o caminho da rota.
+ */
+
+@Target(ElementType.TYPE) // Pode ser usada em classes.
+@Retention(RetentionPolicy.RUNTIME) // Disponível em tempo de execução.
 public @interface Rota {
-	String value();
+	String value(); // Caminho da rota associado à classe.
 }

@@ -8,15 +8,21 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet controlador principal para gerenciar rotas e comandos.
+ * É responsável por redirecionar as requisições para os comandos adequados com base na URL.
+ */
 @WebServlet(urlPatterns = {"/view/*", "/"}) // Mapeamento para capturar qualquer caminho dentro de "/view"
 public class ProdutoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+     // Mapa que contém os comandos registrados no contexto da aplicação
     private Map<String, Command> commands;
 
     @SuppressWarnings("unchecked")
 	@Override
     public void init() throws ServletException {
+    	 // Recupera o mapa de comandos do contexto da aplicação
         this.commands = (Map<String, Command>) getServletContext().getAttribute("commands");
         if (this.commands == null) {
             System.out.println("Mapa de comandos não encontrado no contexto.");
@@ -28,7 +34,7 @@ public class ProdutoController extends HttpServlet {
         // Pega o caminho completo da requisição (ex: /seu-app/view/adicionarProdutos)
         String requestURI = request.getRequestURI();
         
-        // Pega o contexto da aplicação (ex: /seu-app)
+        // Remove o contexto da aplicação para obter apenas o caminho específico
         String contextPath = request.getContextPath();
 
         // Remove o contexto da URL para obter apenas o caminho da requisição após o contexto
@@ -41,12 +47,14 @@ public class ProdutoController extends HttpServlet {
 
         System.out.println("Caminho solicitado: " + path);
 
-        // Agora você pode verificar e executar o comando com base no caminho
+       
         @SuppressWarnings("unchecked")
 		Map<String, Command> commands = (Map<String, Command>) request.getServletContext().getAttribute("commands");
-
+        
+       // Obtém o comando associado ao caminho
         Command command = commands.get(path);
 
+        // Executa o comando, se encontrado, ou retorna erro 404
         if (command != null) {
             command.execute(request, response);
         } else {
