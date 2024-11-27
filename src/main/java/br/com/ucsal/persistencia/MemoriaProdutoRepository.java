@@ -19,20 +19,25 @@ public class MemoriaProdutoRepository implements ProdutoRepository<Produto, Inte
 	private AtomicInteger currentId = new AtomicInteger(1);
 
 	private static MemoriaProdutoRepository instancia;
+	private static boolean instanciaUnica = false;
 
 	private MemoriaProdutoRepository() {
 	}
 
 	// Obtém a instância Singleton do repositório em memória.
-	public static synchronized MemoriaProdutoRepository getInstancia() {
-		if (instancia == null) {
-			instancia = new MemoriaProdutoRepository();
-			System.out.println("Singleton: Criando nova instância de MemoriaProdutoRepository.");
-		} else {
-			System.out.println("Singleton: Retornando instância já existente de MemoriaProdutoRepository.");
-		}
-		return instancia;
-	}
+	   public static synchronized MemoriaProdutoRepository getInstancia() {
+	        if (instancia == null) {
+	            instancia = new MemoriaProdutoRepository();
+	            System.out.println("Singleton: Criando nova instância de MemoriaProdutoRepository.");
+	            instanciaUnica = true; // Marca que a instância foi criada
+	        } else if (!instanciaUnica) {
+	            System.out.println("Singleton: Retornando instância existente de MemoriaProdutoRepository.");
+	            instanciaUnica = true; // Marca que a mensagem já foi exibida
+	        }
+	        return instancia;
+	    }
+	    
+
 
 	// Adiciona um novo produto ao armazenamento em memória.
 	@Override

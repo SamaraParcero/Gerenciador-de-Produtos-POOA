@@ -33,7 +33,7 @@ public class Injector {
                     // Injeta dependência com base no tipo do campo
                     if (field.getType().equals(ProdutoService.class)) {
                         // Determina o tipo de repositório dinamicamente
-                        int repositoryType = PersistenciaFactory.HSQL; // ou MEMORIA, dependendo do contexto
+                        int repositoryType = PersistenciaFactory.MEMORIA; // ou MEMORIA, dependendo do contexto
                      // Obtém a instância do repositório apropriado
                         ProdutoRepository<Produto, Integer> repository =
                                 (ProdutoRepository<Produto, Integer>) PersistenciaFactory.getProdutoRepository(repositoryType);
@@ -41,7 +41,6 @@ public class Injector {
 
                         // Cria uma instância do ProdutoService com o repositório apropriado
                         dependency = new ProdutoService(repository);
-                        System.out.println("Criando repositório em Memória" );
                     } else {
                         throw new IllegalArgumentException(
                                 "Tipo de dependência não suportado para injeção: " + field.getType().getName()
